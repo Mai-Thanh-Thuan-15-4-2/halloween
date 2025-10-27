@@ -373,16 +373,37 @@
             will-change: left, top, transform, width;
         }
 
+        .wibu-ground {
+            position: absolute;
+            left: 50%;
+            bottom: 18vh;
+            transform: translateX(-50%) translateY(0);
+            width: 13vw;
+            min-width: 110px;
+            max-width: 240px;
+            height: 2.2vw;
+            min-height: 18px;
+            max-height: 38px;
+            background: linear-gradient(180deg, #2d1b3d 0%, #181818 100%);
+            border-radius: 50% 50% 60% 60%/60% 60% 100% 100%;
+            box-shadow: 0 6px 18px 0 #000a, 0 0 0 2px #0008;
+            z-index: 8;
+            pointer-events: none;
+            user-select: none;
+            transition: transform 1.2s cubic-bezier(.4,1,.4,1);
+        }
+
         .wibu-img {
             position: absolute;
             left: 50%;
             bottom: 18vh;
-            transform: translateX(-50%);
-            z-index: 8;
+            transform: translateX(-50%) translateY(0);
+            z-index: 9;
             width: 12vw;
             min-width: 100px;
             max-width: 220px;
             height: auto;
             pointer-events: none;
             user-select: none;
+            transition: transform 1.2s cubic-bezier(.4,1,.4,1);
         }

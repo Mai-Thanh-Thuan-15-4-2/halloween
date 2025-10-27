@@ -279,3 +279,44 @@ const dog = document.getElementById('dog');
                 moveBatTo(batTarget, 400);
             });
         }
+
+        // Hiệu ứng nâng lên/hạ xuống và lắc ngang cho wibu và mảnh đất
+        (function wibuGroundBounce() {
+            const ground = document.getElementById('wibu-ground');
+            const wibu = document.getElementById('wibu-img');
+            if (!ground || !wibu) return;
+            let up = true;
+            let right = true;
+            function animate() {
+                // Nâng lên cao hơn và lắc ngang
+                const y = up ? -38 : 0; // nâng cao hơn
+                const x = right ? 24 : -24; // lắc sang phải/trái
+                ground.style.transform = `translateX(-50%) translateY(${y}px)`;
+                wibu.style.transform = `translateX(-50%) translateY(${y - 18}px) translateX(${x}px)`;
+                up = !up;
+                right = !right;
+                setTimeout(animate, up ? 1200 : 1200);
+            }
+            animate();
+        })();
+
+        // Nhạc nền phát tự động khi vào trang (nếu trình duyệt cho phép)
+        (function wibuMusic() {
+            const audio = document.getElementById('wibu-audio');
+            if (!audio) return;
+            audio.loop = true;
+            // Tự động phát khi trang load
+            function tryPlay() {
+                audio.currentTime = 0;
+                const playPromise = audio.play();
+                if (playPromise && typeof playPromise.then === 'function') {
+                    playPromise.catch(() => {
+                        // Nếu bị chặn, sẽ phát lại khi có tương tác
+                        window.addEventListener('click', tryPlay, { once: true });
+                    });
+                }
+            }
+            window.addEventListener('DOMContentLoaded', () => {
+                setTimeout(tryPlay, 300);
+            });
+        })();
