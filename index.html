@@ -4,51 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khu Rừng Halloween</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Bangers&display=swap" as="style">
 </head>
 <body>
-    <link rel="stylesheet" href="style.css">
-    <div class="bg-animated"></div>
-    <svg class="bg-waves" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-        <defs>
-            <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#4b206b"/>
-                <stop offset="50%" stop-color="#2d1b3d"/>
-                <stop offset="100%" stop-color="#1a0826"/>
-            </linearGradient>
-        </defs>
-        <path d="M0,800 Q480,900 960,800 T1920,800 V1080 H0 Z"
-              fill="url(#waveGrad)" filter="url(#blur1)"/>
-        <path d="M0,850 Q600,950 1200,850 T1920,850 V1080 H0 Z"
-              fill="url(#waveGrad)" opacity="0.7"/>
-        <filter id="blur1">
-            <feGaussianBlur stdDeviation="30"/>
-        </filter>
-    </svg>
-    <div class="forest-container">
-        <div class="moon rise" id="moon">
-            <div class="moon-crater crater1"></div>
-            <div class="moon-crater crater2"></div>
-            <div class="moon-crater crater3"></div>
-            <div class="moon-crater crater4"></div>
-            <div class="moon-crater crater5"></div>
-            <div class="moon-crater crater6"></div>
-            <div class="moon-crater crater7"></div>
+    <!-- Modal Halloween -->
+    <div id="halloween-modal" class="halloween-modal">
+        <div class="halloween-modal-content">
+            <h2 class="halloween-title" aria-label="Halloween animation start screen">HALLOWEEN</h2>
+            <button id="halloween-play-btn" class="halloween-play-btn">PLAY</button>
         </div>
-        <img src="images/castle.png" alt="Lâu đài" class="castle" id="castle" />
-        <img src="images/tree-right-1.gif" alt="Cây góc phải" class="tree-right" />
-        <img src="images/witch.gif" alt="Phù thủy bay" class="witch enter" id="witch" />
-        <div class="dog-light" id="dog-light"></div>
-        <img src="images/ghost.gif" alt="Ma bay" class="ghost-float" id="ghost1" />
-        <img src="images/hand.png" alt="Bàn tay" class="hand-rise" id="hand-rise" />
-        <div class="grass"></div>
-        <div class="wibu-ground" id="wibu-ground"></div>
-        <img src="images/wibu.gif" alt="Wibu" class="wibu-img" id="wibu-img" />
-        <audio id="wibu-audio" src="sounds/wibu.mp3"></audio>
-        <img src="images/pumpkin.gif" alt="Bí ngô" class="pumpkin-group" id="pumpkin-group" />
-        <img src="images/dog.gif" alt="Chó chạy" class="dog" id="dog" />
-        <div class="eyes-under" id="eyes-under"></div>
-        <img src="images/bat.gif" alt="Dơi bay" class="bat-fly" id="bat-fly" />
     </div>
+    <script src="main.js"></script>
 </body>
-<script src="main.js"></script>
 </html>
