@@ -1,5 +1,4 @@
-
-        const dog = document.getElementById('dog');
+const dog = document.getElementById('dog');
         const dogLight = document.getElementById('dog-light');
         const ghost1 = document.getElementById('ghost1');
         const forestContainer = document.querySelector('.forest-container');
@@ -197,6 +196,86 @@
                 if (castle) castle.classList.add('visible');
                 const pumpkin = document.getElementById('pumpkin-group');
                 if (pumpkin) pumpkin.classList.add('visible');
-                handRiseLoop();
+                // handRiseLoop(); // Bỏ gọi hiệu ứng bàn tay
             }, 1500);
         });
+
+        // DƠI BAY NGẪU NHIÊN, BAY THEO CHUỘT, PHÓNG TO/THU NHỎ KHI BAY XA/GẦN
+        const bat = document.getElementById('bat-fly');
+        let batTarget = { x: 50, y: 20, scale: 1 };
+        let batTimeout = null;
+        let mouseActive = false;
+        let lastMouse = { x: 50, y: 20 };
+        let batMoving = false;
+
+        function randomBatTarget() {
+            // Bay trong vùng 10vw-85vw, 8vh-40vh, scale 0.5-1.2
+            return {
+                x: Math.random() * 75 + 10,
+                y: Math.random() * 32 + 8,
+                scale: 0.5 + Math.random() * 0.7
+            };
+        }
+
+        function moveBatTo(target, duration = 2200) {
+            bat.style.left = target.x + 'vw';
+            bat.style.top = target.y + 'vh';
+            bat.style.transform = `scale(${target.scale})`;
+            bat.style.width = (7 * target.scale) + 'vw';
+        }
+
+        function batAutoFly() {
+            if (mouseActive) return;
+            batMoving = true;
+            batTarget = randomBatTarget();
+            moveBatTo(batTarget);
+            batTimeout = setTimeout(batAutoFly, 2200 + Math.random() * 1200);
+        }
+
+        function batFollowMouse(e) {
+            mouseActive = true;
+            // Tính vị trí chuột theo vw/vh
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            let x = (e.clientX / vw) * 100;
+            let y = (e.clientY / vh) * 100;
+            // Giới hạn vùng bay
+            x = Math.max(5, Math.min(90, x));
+            y = Math.max(5, Math.min(60, y));
+            // scale nhỏ khi xa giữa màn hình, lớn khi gần giữa
+            const dx = Math.abs(x - 50);
+            const dy = Math.abs(y - 30);
+            let scale = 1.2 - (dx + dy) / 100;
+            scale = Math.max(0.5, Math.min(1.2, scale));
+            batTarget = { x, y, scale };
+            moveBatTo(batTarget, 1200);
+            if (batTimeout) clearTimeout(batTimeout);
+            // Nếu chuột không di chuyển 2s thì dơi tự bay tiếp
+            if (batMoving) batMoving = false;
+            if (batTimeout) clearTimeout(batTimeout);
+            batTimeout = setTimeout(() => {
+                mouseActive = false;
+                batAutoFly();
+            }, 2000);
+        }
+
+        if (bat) {
+            // Khởi tạo vị trí dơi
+            moveBatTo(batTarget, 0);
+            setTimeout(batAutoFly, 800);
+            window.addEventListener('mousemove', batFollowMouse);
+
+            // Hiệu ứng cuộn chuột để tăng/giảm kích thước con dơi
+            window.addEventListener('wheel', function (e) {
+                // Tăng hoặc giảm scale theo deltaY
+                let scale = batTarget.scale || 1;
+                if (e.deltaY < 0) {
+                    scale += 0.08;
+                } else {
+                    scale -= 0.08;
+                }
+                scale = Math.max(0.4, Math.min(2, scale));
+                batTarget.scale = scale;
+                moveBatTo(batTarget, 400);
+            });
+        }
