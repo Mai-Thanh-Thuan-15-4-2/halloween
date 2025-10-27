@@ -111,13 +111,34 @@ function startHalloweenUI() {
         { tag: 'img', src: 'images/ghost.gif', alt: 'Ma bay', class: 'ghost-float', id: 'ghost1' },
         { tag: 'div', class: 'grass' },
         { tag: 'div', class: 'wibu-ground', id: 'wibu-ground' },
-        { tag: 'img', src: 'images/wibu.gif', alt: 'Wibu', class: 'wibu-img', id: 'wibu-img' },
+        { tag: 'img', src: 'images/wibu-1.gif', alt: 'Wibu', class: 'wibu-img', id: 'wibu-img' },
         { tag: 'audio', src: 'sounds/wibu.mp3', id: 'wibu-audio' },
         { tag: 'img', src: 'images/pumpkin.gif', alt: 'Bí ngô', class: 'pumpkin-group', id: 'pumpkin-group' },
         { tag: 'img', src: 'images/dog.gif', alt: 'Chó chạy', class: 'dog', id: 'dog' },
         { tag: 'div', class: 'eyes-under', id: 'eyes-under' },
         { tag: 'img', src: 'images/bat.gif', alt: 'Dơi bay', class: 'bat-fly', id: 'bat-fly' }
     ];
+
+    // Toggle wibu image between 'images/wibu-1.gif' and 'images/wibu.gif' when Space is pressed
+    (function setupWibuToggle() {
+        const SRC_A = 'images/wibu-1.gif';
+        const SRC_B = 'images/wibu.gif'; // đổi tên file nếu khác
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault(); // tránh cuộn trang khi nhấn Space
+                const wibu = document.getElementById('wibu-img');
+                if (!wibu) {
+                    console.warn('wibu-img chưa được tạo hoặc không tồn tại');
+                    return;
+                }
+                const current = wibu.getAttribute('src') || '';
+                const next = current.includes('wibu-1') ? SRC_B : SRC_A;
+                wibu.src = next;
+                wibu.onerror = () => console.error('Failed to load wibu image:', next);
+                wibu.onload = () => console.log('Wibu image switched to:', next);
+            }
+        });
+    })();
 
     elements.forEach(el => {
         const element = document.createElement(el.tag);
